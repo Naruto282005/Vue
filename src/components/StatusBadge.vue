@@ -1,23 +1,28 @@
 <template>
-    <span :class="badgeClass">
-      {{ isActive ? 'Active' : 'Inactive' }}
-    </span>
-  </template>
-  
-  <script>
-  export default {
-    name: 'StatusBadge',
-    props: {
-      isActive: {
-        type: Boolean,
-        required: true
-      }
-    },
-    computed: {
-      badgeClass() {
-        return this.isActive ? 'text-green-600 font-semibold' : 'text-gray-500 font-semibold';
-      }
-    }
-  }
-  </script>
-  
+  <span :class="badgeClass">{{ statusText }}</span>
+</template>
+
+<script setup>
+import { computed } from 'vue';
+
+const props = defineProps({
+  isActive: {
+    type: Boolean,
+    required: true,
+  },
+});
+
+const statusText = computed(() => (props.isActive ? 'Active' : 'Inactive'));
+const badgeClass = computed(() => (props.isActive ? 'active-badge' : 'inactive-badge'));
+</script>
+
+<style scoped>
+.active-badge {
+  color: green;
+  font-weight: bold;
+}
+
+.inactive-badge {
+  color: red;
+}
+</style>
